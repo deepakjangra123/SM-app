@@ -1,15 +1,3 @@
-.comment_user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.lower {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .title_section {
   padding-top: 20px;
   width: 20%;
@@ -28,21 +16,16 @@
 .title_section h3 {
   margin-bottom: 5px;
 }
-
 .title_container {
   width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: center;
   border-bottom: 2px solid #000;
   padding-bottom: 5px;
 }
 
-    .description_container {
-    height: 42vh;
-    padding-top: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    }
-
+.description_container {
+  padding-top: 10px;
+}

@@ -7,6 +7,8 @@ import { LiaCommentSolid } from "react-icons/lia";
 import { AiTwotoneLike } from "react-icons/ai";
 
 import { PiShareFatLight } from "react-icons/pi";
+import Title from "../Title/Title"
+import Comment from "../Comment/Comment"
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -17,6 +19,7 @@ const Home = () => {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const optionsButtonRef = useRef(null);
   const token = localStorage.getItem("token");
+  const [showComments, setShowComments] = useState({});
 
   useEffect(() => {
     fetchPosts();
@@ -136,7 +139,12 @@ const Home = () => {
     setShowModal(false);
     setSelectedPost(null);
   };
-
+  const handleCommentClick = (postId) => {
+    setShowComments((prevState) => ({
+      ...prevState,
+      [postId]: !prevState[postId],
+    }));
+  };
   return (
     <div className="posts-container">
       {posts.map((post) => {
@@ -205,15 +213,11 @@ const Home = () => {
                 )}
               </div>
 
-              <div className="title_section" >
-                <div className="title_container">
-                  <h3>{post.title}</h3>
-                </div>
-                <div className="description_container">
-                  {" "}
-                  <p>{post.description}</p>
-                </div>
-              </div>
+              {!showComments[post._id] ? (
+                <Title title={post.title} description={post.description} />
+              ) : (
+                <Comment postId={post._id} />
+              )}
             </div>
             <div className="card_footer">
               <div className="comment_container">
@@ -225,7 +229,7 @@ const Home = () => {
                 </div>
                 <div
                   className="icon_container"
-                  onClick={() => console.log("icon-clicked")}
+                  onClick={() =>handleCommentClick(post._id)}
                 >
                   <LiaCommentSolid className="icon_size" />
                 </div>
