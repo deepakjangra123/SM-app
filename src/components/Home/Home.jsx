@@ -182,36 +182,40 @@ const Home = () => {
             </div>
 
             <div className="bottom_section">
-              <div className="content_container">
-                {post.mediaType && (
-                  <div className="media">
-                    {post.mediaType === "image" && (
-                      <img
-                        src={`http://localhost:5050/${post.mediaPath}`}
-                        alt={post.title}
-                      />
-                    )}
-                    {post.mediaType === "video" && (
-                      <video controls>
-                        <source
-                          src={`http://localhost:5050/${post.mediaPath}`}
-                          type="video/mp4"
-                        />
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
-                    {post.mediaType === "audio" && (
-                      <audio controls>
-                        <source
-                          src={`http://localhost:5050/${post.mediaPath}`}
-                          type="audio/mp3"
-                        />
-                        Your browser does not support the audio element.
-                      </audio>
-                    )}
-                  </div>
-                )}
-              </div>
+            <div className="content_container">
+  {post.mediaType && (
+    <div className="media">
+      {post.mediaType === "image" && (
+        <img
+          src={`http://localhost:5050/${post.mediaPath}`}
+          alt={post.title}
+        />
+      )}
+      {post.mediaType === "video" && (
+        <video
+          muted
+          style={{ pointerEvents: "none" }}
+        >
+          <source
+            src={`http://localhost:5050/${post.mediaPath}`}
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      )}
+      {post.mediaType === "audio" && (
+        <audio controls>
+          <source
+            src={`http://localhost:5050/${post.mediaPath}`}
+            type="audio/mp3"
+          />
+          Your browser does not support the audio element.
+        </audio>
+      )}
+    </div>
+  )}
+</div>
+
 
               {!showComments[post._id] ? (
                 <Title title={post.title} description={post.description} />
