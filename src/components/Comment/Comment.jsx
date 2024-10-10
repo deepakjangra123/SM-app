@@ -12,7 +12,7 @@ const Comment = ({ postId }) => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5050/VSAPI/V1/posts/${postId}/comments`,
+          `https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/${postId}/comments`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ const Comment = ({ postId }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5050/VSAPI/V1/posts/${postId}/comments`,
+        `https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/${postId}/comments`,
         { commentText: text }, // Send the comment text in the request body
         {
           headers: {
@@ -93,13 +93,17 @@ const Comment = ({ postId }) => {
         </div>
         <div className="lower">
           <input
-          className="input_comment"
+            className="input_comment"
             type="text"
-            value={text} 
+            value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Write a comment..."
           />
-          <LuSendHorizonal className = "icon_size" onClick={postComment} style={{ cursor: 'pointer' }} />
+          <LuSendHorizonal
+            className="icon_size"
+            onClick={postComment}
+            style={{ cursor: "pointer" }}
+          />
         </div>
       </div>
     </div>

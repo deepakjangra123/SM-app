@@ -7,8 +7,8 @@ import { LiaCommentSolid } from "react-icons/lia";
 import { AiTwotoneLike } from "react-icons/ai";
 
 import { PiShareFatLight } from "react-icons/pi";
-import Title from "../Title/Title"
-import Comment from "../Comment/Comment"
+import Title from "../Title/Title";
+import Comment from "../Comment/Comment";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -47,7 +47,7 @@ const Home = () => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5050/VSAPI/V1/posts/",
+        "https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ const Home = () => {
   const fetchUserData = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5050/VSAPI/V1/profile/${userId}`,
+        `https://blogsapp-8fp3.onrender.com/VSAPI/V1/profile/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ const Home = () => {
   const handleOpenDetail = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5050/VSAPI/V1/posts/${selectedPost._id}`,
+        `https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/${selectedPost._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ const Home = () => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:5050/VSAPI/V1/posts/${selectedPost._id}`,
+        `https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/${selectedPost._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -157,9 +157,9 @@ const Home = () => {
             <div className="post-header">
               <div className="header_left">
                 <div className="profile_image">
-                  {user.profilePhoto != "null" ? (
+                  {user.profilePhoto != null ? (
                     <img
-                      src={`http://localhost:5050/${user.profilePhoto}`}
+                      src={`${user.profilePhoto}`}
                       alt="could not get the image"
                     />
                   ) : (
@@ -182,41 +182,70 @@ const Home = () => {
             </div>
 
             <div className="bottom_section">
-            <div className="content_container">
-  {post.mediaType && (
-    <div className="media">
-      {post.mediaType === "image" && (
-        <img
-          src={`http://localhost:5050/${post.mediaPath}`}
-          alt={post.title}
-        />
-      )}
-      {post.mediaType === "video" && (
-        <video
-          muted
-          style={{ pointerEvents: "none" }}
-        >
-          <source
-            src={`http://localhost:5050/${post.mediaPath}`}
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-      )}
-      {post.mediaType === "audio" && (
-        <audio controls>
-          <source
-            src={`http://localhost:5050/${post.mediaPath}`}
-            type="audio/mp3"
-          />
-          Your browser does not support the audio element.
-        </audio>
-      )}
-    </div>
-  )}
-</div>
+              <div className="content_container">
+                {post.mediaType && (
+                  <div className="media">
+                    {post.mediaType === "image" && (
+                      <img
+                        src={`${post.mediaPath}`}
+                        alt={post.title}
+                      />
+                    )}
+                    {post.mediaType === "video" && (
+                      <video
+                        muted
+                        style={{ pointerEvents: "auto" }} // Allow interactions by default
+                        onClick={async (e) => {
+                          const videoElement = e.target;
 
+                          // Define function to handle entering fullscreen across different browsers
+                          const requestFullScreen = () => {
+                            if (videoElement.requestFullscreen) {
+                              return videoElement.requestFullscreen();
+                            } else if (videoElement.webkitRequestFullscreen) {
+                              // Safari
+                              return videoElement.webkitRequestFullscreen();
+                            } else if (videoElement.msRequestFullscreen) {
+                              // IE/Edge
+                              return videoElement.msRequestFullscreen();
+                            } else if (videoElement.mozRequestFullScreen) {
+                              // Older Firefox
+                              return videoElement.mozRequestFullScreen();
+                            }
+                            return null;
+                          };
 
+                          try {
+                            // Try to enter fullscreen and play video
+                            await requestFullScreen();
+                            await videoElement.play(); // Play the video after entering fullscreen
+                          } catch (error) {
+                            console.error(
+                              "Error entering fullscreen or playing video:",
+                              error
+                            );
+                          }
+                        }}
+                      >
+                        <source
+                          src={`${post.mediaPath}`}
+                          type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                    {post.mediaType === "audio" && (
+                      <audio controls>
+                        <source
+                          src={`${post.mediaPath}`}
+                          type="audio/mp3"
+                        />
+                        Your browser does not support the audio element.
+                      </audio>
+                    )}
+                  </div>
+                )}
+              </div>
               {!showComments[post._id] ? (
                 <Title title={post.title} description={post.description} />
               ) : (
@@ -233,7 +262,7 @@ const Home = () => {
                 </div>
                 <div
                   className="icon_container"
-                  onClick={() =>handleCommentClick(post._id)}
+                  onClick={() => handleCommentClick(post._id)}
                 >
                   <LiaCommentSolid className="icon_size" />
                 </div>

@@ -39,20 +39,28 @@ const Modal = ({ onClose, onSubmit, postDetails }) => {
     try {
       if (postDetails) {
         // Edit existing post
-        await axios.put(`http://localhost:5050/VSAPI/V1/posts/${postDetails._id}`, formData, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await axios.put(
+          `https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/${postDetails._id}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
       } else {
         // Create new post
-        await axios.post("http://localhost:5050/VSAPI/V1/posts/upload", formData, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await axios.post(
+          "https://blogsapp-8fp3.onrender.com/VSAPI/V1/posts/upload",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
       }
       onSubmit();
       onClose();

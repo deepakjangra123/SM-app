@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import "./Signup.css";
 
 const Signup = () => {
@@ -19,20 +19,24 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5050/VSAPI/V1/auth/register", {
-        username,
-        email,
-        password
-      });
+      const response = await axios.post(
+        "https://blogsapp-8fp3.onrender.com/VSAPI/V1/auth/register",
+        {
+          username,
+          email,
+          password,
+        }
+      );
 
       console.log("Signup response:", response.data);
 
       // Navigate to login page on successful signup
       navigate("/login");
-
     } catch (error) {
       console.error("Error signing up:", error.response?.data || error.message);
-      setError(error.response?.data?.message || "An error occurred during signup");
+      setError(
+        error.response?.data?.message || "An error occurred during signup"
+      );
     }
   };
 

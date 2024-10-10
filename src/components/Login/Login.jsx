@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate , Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
@@ -14,18 +14,16 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5050/VSAPI/V1/auth/login",
+        "https://blogsapp-8fp3.onrender.com/VSAPI/V1/auth/login",
         {
           email: email,
           password: password,
         }
       );
 
-
       const { token } = response.data;
-        localStorage.setItem("token", token); 
-        navigate("/home");
-      
+      localStorage.setItem("token", token);
+      navigate("/home");
     } catch (error) {
       console.error("Login failed", error);
       setError(error.response?.data?.message || "Login failed: Unknown error");

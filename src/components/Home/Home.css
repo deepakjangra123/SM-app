@@ -221,3 +221,20 @@ body {
   height: 25px;
   width: 25px;
 }
+
+
+.video-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.show-overlay {
+  opacity: 1;
+}
